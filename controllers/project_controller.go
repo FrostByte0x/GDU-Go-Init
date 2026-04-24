@@ -48,6 +48,7 @@ func GetProject(c *gin.Context) {
 
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "invalid ID"})
+		return
 	}
 
 	if err := config.DB.First(&project, id).Error; err != nil {
