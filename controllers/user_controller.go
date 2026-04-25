@@ -4,8 +4,10 @@ import (
 	"errors"
 	"log/slog"
 	"net/http"
+	"os"
 	"partage-projets/config"
 	"partage-projets/models"
+	"partage-projets/utils"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -52,7 +54,7 @@ func Login(c *gin.Context) {
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
 	// this does not look safe
-	tokenString, err := token.SignedString([]byte("a-very-long-string-that-statisfies-my-256bits-requirements"))
+	tokenString, err := token.SignedString([]byte(os.Getenv("JWT_SECRET")))
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "server error"})
@@ -77,6 +79,11 @@ func Register(c *gin.Context) {
 	if !errors.Is(result.Error, gorm.ErrRecordNotFound) {
 		// something else went wrong
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "server error"})
+		return
+	}
+
+	if err := utils.Validatepassword(user.Password); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)

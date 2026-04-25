@@ -2,12 +2,15 @@ package routes
 
 import (
 	"partage-projets/controllers"
+	"partage-projets/middlewares"
 
 	"github.com/gin-gonic/gin"
 )
 
 func ProjectsRoutes(router *gin.Engine) {
 	routesGroup := router.Group("/projects")
+
+	routesGroup.Use(middlewares.Authentication())
 
 	{
 		routesGroup.GET("/", controllers.GetProjects)

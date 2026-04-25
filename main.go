@@ -8,17 +8,28 @@ import (
 	"partage-projets/routes"
 
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 )
 
 func main() {
 	//Create the default router
 	router := gin.Default()
+
+	router.SetTrustedProxies(nil)
+	router.Use(config.SecurityMiddleware())
+	router.Use(config.CORSMiddleware())
+	router.Use(config.RateLimit(100))
+
+	err := godotenv.Load()
+	if err != nil {
+		slog.Warn(err.Error())
+	}
 	// Register the routes
 	routes.ProjectsRoutes(router)
 	routes.UserRoutes(router)
 	// Connect to the Database server
 	slog.Info("Server starting. Connecting to database..")
-	err := config.ConnectDB()
+	err = config.ConnectDB()
 	if err != nil {
 		log.Fatal(err)
 	}
