@@ -13,7 +13,7 @@ import (
 	"testing"
 
 	"github.com/gin-gonic/gin"
-	"github.com/glebarez/sqlite" // Since I'm running Go on Windows, I
+	"github.com/glebarez/sqlite" // Since I'm running Go on Windows
 	"github.com/stretchr/testify/assert"
 	"gorm.io/gorm"
 )
