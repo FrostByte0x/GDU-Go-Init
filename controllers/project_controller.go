@@ -16,12 +16,13 @@ import (
 )
 
 // GetProjects godoc
-// @Description Return a project
-// @Tags Projects
-// @Produce json
-// @Success 200 {array} models.Project
-// @Security BearerAuth
-// @Router /projects [get]
+//
+//	@Description	Return a project
+//	@Tags			Projects
+//	@Produce		json
+//	@Success		200	{array}	models.Project
+//	@Security		BearerAuth
+//	@Router			/projects [get]
 func GetProjects(c *gin.Context) {
 	var projects []models.Project
 

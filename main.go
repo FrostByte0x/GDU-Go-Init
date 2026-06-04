@@ -16,12 +16,12 @@ import (
 	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
-// @title Share projects over http
-// @version 1.0
-// @description Share files using a web backend and a database
-// @securityDefinitions.ApiKey BearerAuth
-// @in header
-// @name Authorization
+// @title						Share projects over http
+// @version					1.0
+// @description				Share files using a web backend and a database
+// @securityDefinitions.ApiKey	BearerAuth
+// @in							header
+// @name						Authorization
 func main() {
 	//Create the default router
 	router := gin.Default()
